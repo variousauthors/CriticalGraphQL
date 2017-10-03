@@ -1,9 +1,5 @@
 import * as React from 'react'
 
-interface ILeadCreateProps {
-  onChange: (e: string) => void
-}
-
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 }
@@ -32,13 +28,23 @@ class Input extends React.Component<IInputProps> {
   }
 }
 
+export interface ILeadCreateProps {
+  onSubmit: (e: string) => void
+}
+
 export const LeadCreate = (props: ILeadCreateProps) => {
 
   return (
     <div>
-      <Input
-        type='text'
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.onChange(e.target.value)}/>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          props.onSubmit('example.com')
+        }}
+      >
+        <Input type='text' />
+        <button type='submit'>+</button>
+      </form>
     </div>
   )
 }

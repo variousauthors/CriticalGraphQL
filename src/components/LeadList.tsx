@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ILead } from 'src/types'
-import { LeadCreate } from './LeadCreate'
+import LeadCreate from '../containers/LeadCreate'
 
 export interface ILeadListProps {
   leads: ILead[]
@@ -25,7 +25,7 @@ export const LeadList = (props: ILeadListProps) => {
   return (
     <div>
       {leads}
-      <LeadCreate onChange={(value: string) => console.log(value)} />
+      <LeadCreate />
     </div>
   )
 }

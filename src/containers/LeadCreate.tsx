@@ -59,7 +59,12 @@ const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent)
 }
 
 export default graphql<IResult, IPropsFromParent, BaseProps>(mutation, {
-  props: mapMutationToProps
+  props: mapMutationToProps,
+  options: {
+    refetchQueries: [
+      'allLeads'
+    ]
+  }
 })(connect<IPropsFromState, IPropsFromDispatch, BaseProps>(
   mapStateToGraphQL,
   mapStateToDispatch

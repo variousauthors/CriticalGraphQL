@@ -18,5 +18,7 @@ export interface IState {
 export interface ILead {
   node: {
     url: string
+    title: string
+    author: string
   }
 }

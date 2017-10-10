@@ -1,5 +1,3 @@
-
-
 import { gql, graphql, OptionProps } from 'react-apollo'
 import { LeadList as Base, ILeadListProps as IBaseProps } from '../components/LeadList'
 import { ILead } from 'src/types'
@@ -10,6 +8,8 @@ const query = gql`
       edges {
         node {
           url
+          title
+          author
         }
       }
     }

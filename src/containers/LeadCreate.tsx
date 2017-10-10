@@ -1,5 +1,16 @@
 import { gql, graphql, OptionProps } from 'react-apollo'
-import { LeadCreate as Base, ILeadCreateProps as IBaseProps } from '../components/LeadCreate'
+import {
+  LeadCreate as Base,
+  ILeadCreatePropsFromState as IPropsFromState,
+  ILeadCreatePropsFromDispatch as IPropsFromDispatch,
+  ILeadCreatePropsFromGraphQL as IPropsFromGraphQL,
+} from '../components/LeadCreate'
+
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+
+import { IState } from '../types'
+import { ActionCreator } from '../actions'
 
 const mutation = gql`
   mutation createLead($url: String!) {
@@ -17,19 +28,39 @@ interface IResult {
 }
 
 interface IPropsFromParent {}
-interface IPropsFromState {}
-//interface IPropsFromDispatch {}
 
-const mapMutationToProps = (props: OptionProps<IPropsFromParent & IPropsFromState, IResult>): IBaseProps => {
+type BaseProps = IPropsFromState & IPropsFromDispatch & IPropsFromGraphQL
+
+const mapMutationToProps = (props: OptionProps<IPropsFromParent & IPropsFromState & IPropsFromDispatch, IResult>): BaseProps => {
+
   return {
+    url: props.ownProps.url,
+    onURLChange: props.ownProps.onURLChange,
     onSubmit: (url: string) => {
-      props.mutate ? props.mutate({ variables: {
+      return props.mutate ? props.mutate({ variables: {
         url,
       }}) : null
     }
   }
 }
 
-export default graphql<IResult, IPropsFromParent & IPropsFromState, IBaseProps>(mutation, {
+const mapStateToGraphQL = (state: IState, props: IPropsFromParent): IPropsFromState => {
+  return {
+    url: state.leadCreate.url
+  }
+}
+
+const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
+  return {
+    onURLChange: (url: string) => {
+      dispatch(ActionCreator.changeLeadCreateURL(url))
+    }
+  }
+}
+
+export default graphql<IResult, IPropsFromParent, BaseProps>(mutation, {
   props: mapMutationToProps
-})(Base)
+})(connect<IPropsFromState, IPropsFromDispatch, BaseProps>(
+  mapStateToGraphQL,
+  mapStateToDispatch
+)(Base))

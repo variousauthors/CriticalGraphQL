@@ -1,48 +1,32 @@
 import * as React from 'react'
 
-interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-
+export interface ILeadCreatePropsFromState {
+  url: string
 }
 
-class Input extends React.Component<IInputProps> {
-  handleChange (e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      ...this.state,
-      value: e.target.value
-    })
-
-    if (this.props.onChange) {
-      this.props.onChange(e)
-    }
-  }
-
-  render () {
-    return (
-      <span>
-        <input
-          {...this.props}
-          onChange={(e) => this.handleChange(e)}
-        />
-      </span>
-    )
-  }
+export interface ILeadCreatePropsFromDispatch {
+  onURLChange: (e: string) => void
 }
 
-export interface ILeadCreateProps {
+export interface ILeadCreatePropsFromGraphQL {
   onSubmit: (e: string) => void
 }
 
-export const LeadCreate = (props: ILeadCreateProps) => {
+export const LeadCreate = (props: ILeadCreatePropsFromState & ILeadCreatePropsFromDispatch & ILeadCreatePropsFromGraphQL) => {
 
   return (
     <div>
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          props.onSubmit('example.com')
+          props.onSubmit(props.url)
         }}
       >
-        <Input type='text' />
+        <input
+          value={props.url}
+          type='text'
+          onChange={(e) => props.onURLChange(e.target.value)}
+        />
         <button type='submit'>+</button>
       </form>
     </div>

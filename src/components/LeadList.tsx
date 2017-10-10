@@ -7,25 +7,19 @@ export interface ILeadListProps {
   isLoading: boolean
 }
 
-interface ILeadProps {
-  url: string
-}
-
-const Lead = (props: ILeadProps) => {
-  return (
-    <div>{props.url}</div>
-  )
-}
-
 export const LeadList = (props: ILeadListProps) => {
   const leads = props.leads.map((edge: ILead, index: number) => {
-    return <Lead key={index} {...edge.node} />
+    return (
+      <div key={index}>
+        <a href={edge.node.url} target='_blank'>{edge.node.url}</a>
+      </div>
+    )
   })
 
   return (
     <div>
-      {leads}
       <LeadCreate />
+      {leads}
     </div>
   )
 }

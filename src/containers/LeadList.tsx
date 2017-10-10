@@ -6,7 +6,7 @@ import { ILead } from 'src/types'
 
 const query = gql`
   query allLeads {
-    allLeads {
+    allLeads(orderBy: PRIMARY_KEY_DESC) {
       edges {
         node {
           url

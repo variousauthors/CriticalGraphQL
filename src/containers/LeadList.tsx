@@ -7,6 +7,7 @@ const query = gql`
     allLeads(orderBy: PRIMARY_KEY_DESC) {
       edges {
         node {
+          id
           url
           title
           author

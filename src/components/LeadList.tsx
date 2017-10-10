@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ILead } from 'src/types'
 import LeadCreate from '../containers/LeadCreate'
-import { Lead } from './Lead'
+import { LeadShow } from './LeadShow'
 
 export interface ILeadListProps {
   leads: ILead[]
@@ -12,7 +12,7 @@ export const LeadList = (props: ILeadListProps) => {
 
   const leads = props.leads.map((edge: ILead, index: number) => {
     return (
-      <Lead key={index} {...edge.node}/>
+      <LeadShow key={index} {...edge.node}/>
     )
   })
 

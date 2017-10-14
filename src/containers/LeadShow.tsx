@@ -15,13 +15,21 @@ export interface IPropsFromParent {
   author: string
 }
 
-export interface IPropsFromState { }
+export interface IPropsFromState {
+  isEditing: boolean
+}
 
 export interface IPropsFromDispatch {
   startEditing: (id: number) => void
 }
 
+const mapStateToProps = (state: IState, props: IPropsFromParent): IPropsFromState => {
+  return {
+    isEditing: false
+  }
+}
 const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
+
   return {
     startEditing: (id: number) => {
       // nop
@@ -31,13 +39,14 @@ const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent)
 
 const mergeProps = (propsFromState: IPropsFromState, propsFromDispatch: IPropsFromDispatch, propsFromParent: IPropsFromParent): IBaseProps => {
   return {
+    isEditing: propsFromState.isEditing,
     startEditing: propsFromDispatch.startEditing,
     ...propsFromParent
   }
 }
 
 export default connect<IPropsFromState, IPropsFromDispatch, IPropsFromParent, IBaseProps>(
-  null,
+  mapStateToProps,
   mapStateToDispatch,
   mergeProps
 )(Base)

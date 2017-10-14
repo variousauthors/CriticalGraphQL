@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { LeadVote } from './LeadVote'
+import { LeadEdit } from './LeadEdit'
 
 export interface ILeadShowProps {
   id: number
@@ -7,6 +8,7 @@ export interface ILeadShowProps {
   url: string
   author: string
 
+  isEditing: boolean
   startEditing: (id: number) => void
 }
 
@@ -30,6 +32,9 @@ const style = {
 }
 
 export const LeadShow = (props: ILeadShowProps) => {
+  if (props.isEditing) {
+    return <LeadEdit {...props}/>
+  }
 
   return (
     <div style={style.body}>

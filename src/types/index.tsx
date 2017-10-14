@@ -6,6 +6,8 @@ export enum ActionType {
   UPDATE_LEAD_EDIT = 'UPDATE_LEAD_EDIT',
 }
 
+export interface INothing {}
+
 export interface IAction {
   type: ActionType
   data: any

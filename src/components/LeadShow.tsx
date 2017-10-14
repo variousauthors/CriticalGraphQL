@@ -1,16 +1,12 @@
 import * as React from 'react'
 import { LeadVote } from './LeadVote'
 
-export interface ILeadShowPropsFromParent {
+export interface ILeadShowProps {
   id: number
-  url: string
   title: string
+  url: string
   author: string
-}
 
-export interface ILeadShowPropsFromState { }
-
-export interface ILeadShowPropsFromDispatch {
   startEditing: (id: number) => void
 }
 
@@ -33,7 +29,7 @@ const style = {
   }
 }
 
-export const LeadShow = (props: ILeadShowPropsFromParent & ILeadShowPropsFromDispatch) => {
+export const LeadShow = (props: ILeadShowProps) => {
 
   return (
     <div style={style.body}>

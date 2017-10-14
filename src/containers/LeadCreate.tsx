@@ -1,56 +1,32 @@
-import { gql, graphql, OptionProps } from 'react-apollo'
 import {
-  LeadCreate as Base,
-  ILeadCreatePropsFromState as IPropsFromState,
-  ILeadCreatePropsFromDispatch as IPropsFromDispatch,
-  ILeadCreatePropsFromGraphQL as IPropsFromGraphQL,
+  ILeadCreateProps as IBaseProps
 } from '../components/LeadCreate'
 
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { IState } from '../types'
+import { IState, INothing } from '../types'
 import { ActionCreator } from '../actions'
 
-const mutation = gql`
-  mutation createLead($url: String!) {
-    createLead(input: {
-      lead: {
-        url: $url
-      }
-    }) {
-      clientMutationId
-    }
-  }
-`
-
-interface IResult {
+interface IPropsFromState {
+  url: string
 }
 
-interface IPropsFromParent {}
-
-type BaseProps = IPropsFromState & IPropsFromDispatch & IPropsFromGraphQL
-
-const mapMutationToProps = (props: OptionProps<IPropsFromParent & IPropsFromState & IPropsFromDispatch, IResult>): BaseProps => {
-
-  return {
-    url: props.ownProps.url,
-    onURLChange: props.ownProps.onURLChange,
-    onSubmit: (url: string) => {
-      return props.mutate ? props.mutate({ variables: {
-        url,
-      }}) : null
-    }
-  }
+interface IPropsFromDispatch {
+  onURLChange: (url: string) => void
 }
 
-const mapStateToGraphQL = (state: IState, props: IPropsFromParent): IPropsFromState => {
+interface IPropsFromParent {
+  onSubmit: (url: string) => void
+}
+
+const mapStateToProps = (state: IState, props: IPropsFromParent): IPropsFromState => {
   return {
     url: state.leadCreate.url
   }
 }
 
-const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
+const mapDispatchToProps = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
   return {
     onURLChange: (url: string) => {
       dispatch(ActionCreator.changeLeadCreateURL(url))
@@ -58,14 +34,30 @@ const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent)
   }
 }
 
-export default graphql<IResult, IPropsFromParent, BaseProps>(mutation, {
-  props: mapMutationToProps,
-  options: {
-    refetchQueries: [
-      'allLeads'
-    ]
+const mergeProps = (propsFromState: IPropsFromState, propsFromDispatch: IPropsFromDispatch, propsFromParent: IPropsFromParent): IBaseProps => {
+  return {
+    url: propsFromState.url,
+    onURLChange: propsFromDispatch.onURLChange,
+    onSubmit: propsFromParent.onSubmit,
   }
-})(connect<IPropsFromState, IPropsFromDispatch, BaseProps>(
-  mapStateToGraphQL,
-  mapStateToDispatch
-)(Base))
+}
+
+/** inner exposes the wrapped component's full interface... perfect for passing into HOCs */
+export const inner = connect<IPropsFromState, IPropsFromDispatch, IBaseProps, IBaseProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)
+
+/** outer is for wrapping a component that is assumed to satisfy IPropsFromParent */
+export const outer = connect<IPropsFromState, IPropsFromDispatch, INothing, IBaseProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)
+
+export default connect<IPropsFromState, IPropsFromDispatch, IPropsFromParent, IBaseProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps
+)

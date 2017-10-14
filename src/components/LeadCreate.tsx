@@ -1,18 +1,13 @@
 import * as React from 'react'
 
-export interface ILeadCreatePropsFromState {
+export interface ILeadCreateProps {
   url: string
+
+  onURLChange: (url: string) => void
+  onSubmit: (url: string) => void
 }
 
-export interface ILeadCreatePropsFromDispatch {
-  onURLChange: (e: string) => void
-}
-
-export interface ILeadCreatePropsFromGraphQL {
-  onSubmit: (e: string) => void
-}
-
-export const LeadCreate = (props: ILeadCreatePropsFromState & ILeadCreatePropsFromDispatch & ILeadCreatePropsFromGraphQL) => {
+export const LeadCreate = (props: ILeadCreateProps) => {
 
   return (
     <div>

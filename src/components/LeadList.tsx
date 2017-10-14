@@ -1,12 +1,16 @@
 import * as React from 'react'
 import { ILead } from 'src/types'
-import LeadCreate from '../containers/LeadCreate'
+import { LeadCreate as Base } from './LeadCreate'
+import { inner as connect } from '../containers/LeadCreate'
+import { outer as graphql } from '../containers/LeadCreateMutation'
 import LeadShow from '../containers/LeadShow'
 
 export interface ILeadListProps {
   leads: ILead[]
   isLoading: boolean
 }
+
+const LeadCreate = graphql(connect(Base))
 
 export const LeadList = (props: ILeadListProps) => {
 

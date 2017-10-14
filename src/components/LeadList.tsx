@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ILead } from 'src/types'
 import LeadCreate from '../containers/LeadCreate'
-import { LeadShow } from './LeadShow'
+import LeadShow from '../containers/LeadShow'
 
 export interface ILeadListProps {
   leads: ILead[]

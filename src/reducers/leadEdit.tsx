@@ -28,17 +28,24 @@ const leadEdits = (state = initialLeadEdits, action: IAction): ILeadEdits => {
         ...state,
       }
     }
-    case ActionType.COMMIT_LEAD_EDIT: // probably just cancel?
+    case ActionType.COMMIT_LEAD_EDIT:
     case ActionType.CANCEL_LEAD_EDIT: {
+      // remove the in-progress lead
 
       return {
         ...state,
       }
     }
     case ActionType.UPDATE_LEAD_EDIT: {
+      if (!state[action.data.id]) {
+        return state
+      }
+
+      const edit = state[action.data.id]
 
       return {
         ...state,
+        [action.data.id]: leadEdit(edit, action)
       }
     }
     default: {

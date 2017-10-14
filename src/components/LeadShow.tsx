@@ -1,14 +1,16 @@
 import * as React from 'react'
-import { LeadVote } from 'src/components/LeadVote'
+import { LeadVote } from './LeadVote'
 
-export interface ILeadPropsFromGraphQL {
+export interface ILeadShowPropsFromParent {
   id: number
   url: string
   title: string
   author: string
 }
 
-export interface ILeadPropsFromDispatch {
+export interface ILeadShowPropsFromState { }
+
+export interface ILeadShowPropsFromDispatch {
   startEditing: (id: number) => void
 }
 
@@ -31,7 +33,7 @@ const style = {
   }
 }
 
-export const LeadShow = (props: ILeadPropsFromGraphQL & ILeadPropsFromDispatch) => {
+export const LeadShow = (props: ILeadShowPropsFromParent & ILeadShowPropsFromDispatch) => {
 
   return (
     <div style={style.body}>

@@ -1,6 +1,6 @@
 import { ActionType } from '../types'
 
-import * as LeadEditActions from '../reducers/leadEdit'
+import * as LeadEditActions from '../reducers/leadEdits'
 import * as LeadCreateActions from '../reducers/leadCreate'
 
 const changeLeadCreateURL = (url: string): LeadCreateActions.IChangeLeadCreateUrl => {

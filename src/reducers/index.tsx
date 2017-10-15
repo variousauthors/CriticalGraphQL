@@ -1,5 +1,5 @@
 import leadCreate from './leadCreate'
-import leadEdits from './leadEdit'
+import leadEdits from './leadEdits'
 
 export default {
   leadCreate,

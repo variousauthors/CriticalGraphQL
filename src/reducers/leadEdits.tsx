@@ -29,6 +29,16 @@ const leadEdit = (state = initialState, action: LeadEditAction): ILeadEdit => {
         ...action.data
       }
     }
+    case ActionType.UPDATE_LEAD_EDIT: {
+      if (state.id !== action.data.id) {
+        return state
+      }
+
+      return {
+        ...state,
+        ...action.data
+      }
+    }
     default: {
       return state
     }
@@ -38,7 +48,6 @@ const leadEdit = (state = initialState, action: LeadEditAction): ILeadEdit => {
 const leadEdits = (state = initialLeadEdits, action: LeadEditAction): ILeadEdits => {
   switch (action.type) {
     case ActionType.START_LEAD_EDIT: {
-      // check that we are not already editing this id
       if (state[action.data.id]) {
         return state
       }
@@ -48,14 +57,22 @@ const leadEdits = (state = initialLeadEdits, action: LeadEditAction): ILeadEdits
         [action.data.id]: leadEdit(undefined, action)
       }
     }
+
     case ActionType.COMMIT_LEAD_EDIT:
     case ActionType.CANCEL_LEAD_EDIT: {
-      // remove the in-progress lead
-
-      return {
-        ...state,
+      if (!state[action.data.id]) {
+        return state
       }
+
+      const newState = {
+        ...state
+      }
+
+      delete newState[action.data.id]
+
+      return newState
     }
+
     case ActionType.UPDATE_LEAD_EDIT: {
       if (!state[action.data.id]) {
         return state

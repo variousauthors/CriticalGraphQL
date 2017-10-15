@@ -31,7 +31,8 @@ const mapStateToProps = (state: IState, props: IPropsFromParent): IPropsFromStat
     isEditing: edit ? true : false
   }
 }
-const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
+
+const mapDispatchToProps = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
 
   return {
     startEditing: (id: number) => {
@@ -50,6 +51,6 @@ const mergeProps = (propsFromState: IPropsFromState, propsFromDispatch: IPropsFr
 
 export default connect<IPropsFromState, IPropsFromDispatch, IPropsFromParent, IBaseProps>(
   mapStateToProps,
-  mapStateToDispatch,
+  mapDispatchToProps,
   mergeProps
 )(Base)

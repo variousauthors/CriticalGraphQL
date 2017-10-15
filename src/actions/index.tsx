@@ -1,4 +1,4 @@
-import { ActionType } from '../types'
+import { ActionType, ILeadEdit } from '../types'
 
 import * as LeadEditActions from '../reducers/leadEdits'
 import * as LeadCreateActions from '../reducers/leadCreate'
@@ -21,7 +21,37 @@ const startLeadEdit = (id: number): LeadEditActions.IStartLeadEdit => {
   }
 }
 
+const updateLeadEdit = (edit: ILeadEdit): LeadEditActions.IUpdateLeadEdit => {
+  return {
+    type: ActionType.UPDATE_LEAD_EDIT,
+    data: {
+      ...edit
+    }
+  }
+}
+
+const cancelLeadEdit = (id: number): LeadEditActions.ICancelLeadEdit => {
+  return {
+    type: ActionType.CANCEL_LEAD_EDIT,
+    data: {
+      id
+    }
+  }
+}
+
+const commitLeadEdit = (id: number): LeadEditActions.ICommitLeadEdit => {
+  return {
+    type: ActionType.COMMIT_LEAD_EDIT,
+    data: {
+      id
+    }
+  }
+}
+
 export const ActionCreator = {
   changeLeadCreateURL,
-  startLeadEdit
+  startLeadEdit,
+  updateLeadEdit,
+  cancelLeadEdit,
+  commitLeadEdit,
 }

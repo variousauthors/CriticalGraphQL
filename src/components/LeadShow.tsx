@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { LeadVote } from './LeadVote'
-import { LeadEdit } from './LeadEdit'
+import LeadEdit from '../containers/LeadEdit'
 
 export interface ILeadShowProps {
   id: number

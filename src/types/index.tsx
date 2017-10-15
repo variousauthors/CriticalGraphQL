@@ -10,7 +10,6 @@ export interface INothing {}
 
 export interface IAction {
   type: ActionType
-  data: any
 }
 
 export interface ILeadCreate {

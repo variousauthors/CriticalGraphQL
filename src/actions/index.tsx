@@ -1,7 +1,9 @@
+import { ActionType } from '../types'
 
-import { ActionType, IAction } from '../types'
+import * as LeadEditActions from '../reducers/leadEdit'
+import * as LeadCreateActions from '../reducers/leadCreate'
 
-const changeLeadCreateURL = (url: string): IAction => {
+const changeLeadCreateURL = (url: string): LeadCreateActions.IChangeLeadCreateUrl => {
   return {
     type: ActionType.CHANGE_LEAD_CREATE_URL,
     data: {
@@ -10,6 +12,16 @@ const changeLeadCreateURL = (url: string): IAction => {
   }
 }
 
+const startLeadEdit = (id: number): LeadEditActions.IStartLeadEdit => {
+  return {
+    type: ActionType.START_LEAD_EDIT,
+    data: {
+      id
+    }
+  }
+}
+
 export const ActionCreator = {
-  changeLeadCreateURL
+  changeLeadCreateURL,
+  startLeadEdit
 }

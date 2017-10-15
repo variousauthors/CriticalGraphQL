@@ -7,6 +7,7 @@ import {
   LeadShow as Base,
   ILeadShowProps as IBaseProps,
 } from '../components/LeadShow'
+import { ActionCreator } from '../actions'
 
 export interface IPropsFromParent {
   id: number
@@ -24,15 +25,17 @@ export interface IPropsFromDispatch {
 }
 
 const mapStateToProps = (state: IState, props: IPropsFromParent): IPropsFromState => {
+  const edit = state.leadEdits[props.id]
+
   return {
-    isEditing: false
+    isEditing: edit ? true : false
   }
 }
 const mapStateToDispatch = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
 
   return {
     startEditing: (id: number) => {
-      // nop
+      dispatch(ActionCreator.startLeadEdit(id))
     }
   }
 }

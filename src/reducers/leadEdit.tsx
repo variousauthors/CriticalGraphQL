@@ -1,10 +1,28 @@
 import { IAction, ActionType, ILeadEdits, ILeadEdit } from '../types'
 
-const initialLeadEdits: ILeadEdits = { }
+interface ILeadEditAction extends IAction {
+  data: ILeadEdit
+}
 
-const leadEdit = (state: ILeadEdit, action: IAction): ILeadEdit => {
+export interface IStartLeadEdit extends ILeadEditAction { }
+export interface ICommitLeadEdit extends ILeadEditAction { }
+export interface ICancelLeadEdit extends ILeadEditAction { }
+export interface IUpdateLeadEdit extends ILeadEditAction { }
+
+type LeadEditAction =
+  IStartLeadEdit
+  | ICommitLeadEdit
+  | ICancelLeadEdit
+  | IUpdateLeadEdit
+
+const initialLeadEdits: ILeadEdits = { }
+const initialState: ILeadEdit = {
+  id: -1
+}
+
+const leadEdit = (state = initialState, action: LeadEditAction): ILeadEdit => {
   switch (action.type) {
-    case ActionType.CHANGE_LEAD_CREATE_URL: {
+    case ActionType.START_LEAD_EDIT: {
 
       return {
         ...state,
@@ -17,15 +35,17 @@ const leadEdit = (state: ILeadEdit, action: IAction): ILeadEdit => {
   }
 }
 
-const leadEdits = (state = initialLeadEdits, action: IAction): ILeadEdits => {
+const leadEdits = (state = initialLeadEdits, action: LeadEditAction): ILeadEdits => {
   switch (action.type) {
     case ActionType.START_LEAD_EDIT: {
       // check that we are not already editing this id
-      // create a leadEdit with the id
-      // insert into the leadEdist
+      if (state[action.data.id]) {
+        return state
+      }
 
       return {
         ...state,
+        [action.data.id]: leadEdit(undefined, action)
       }
     }
     case ActionType.COMMIT_LEAD_EDIT:

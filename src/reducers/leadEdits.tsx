@@ -4,10 +4,18 @@ interface ILeadEditAction extends IAction {
   data: ILeadEdit
 }
 
-export interface IStartLeadEdit extends ILeadEditAction { }
-export interface ICommitLeadEdit extends ILeadEditAction { }
-export interface ICancelLeadEdit extends ILeadEditAction { }
-export interface IUpdateLeadEdit extends ILeadEditAction { }
+export interface IStartLeadEdit extends ILeadEditAction {
+  type: ActionType.START_LEAD_EDIT
+}
+export interface ICommitLeadEdit extends ILeadEditAction {
+  type: ActionType.COMMIT_LEAD_EDIT
+}
+export interface ICancelLeadEdit extends ILeadEditAction {
+  type: ActionType.CANCEL_LEAD_EDIT
+}
+export interface IUpdateLeadEdit extends ILeadEditAction {
+  type: ActionType.UPDATE_LEAD_EDIT
+}
 
 type LeadEditAction =
   IStartLeadEdit

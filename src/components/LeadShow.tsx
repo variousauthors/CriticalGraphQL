@@ -36,7 +36,6 @@ const style = {
 }
 
 export const LeadShow = (props: ILeadShowProps) => {
-  console.log(props)
   if (props.isEditing) {
     return <LeadEdit {...props}/>
   }

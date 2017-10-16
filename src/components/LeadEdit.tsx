@@ -1,4 +1,8 @@
 import * as React from 'react'
+import { LeadDelete as BaseLeadDelete } from './LeadDelete'
+import leadDeleteMutation from '../containers/LeadDeleteMutation'
+
+const LeadDelete = leadDeleteMutation(BaseLeadDelete)
 
 export type LeadEditChange = null
   | { title: string }
@@ -70,6 +74,7 @@ export const LeadEdit = (props: ILeadEditProps) => {
         <div>
           <button type='submit'>Save</button>
           <button type='button' onClick={() => props.onCancel(props.id)}>Cancel</button>
+          <LeadDelete id={props.id}/>
         </div>
       </form>
     </div>

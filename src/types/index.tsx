@@ -4,6 +4,7 @@ export enum ActionType {
   COMMIT_LEAD_EDIT = 'COMMIT_LEAD_EDIT',
   CANCEL_LEAD_EDIT = 'CANCEL_LEAD_EDIT',
   UPDATE_LEAD_EDIT = 'UPDATE_LEAD_EDIT',
+  DELETE_LEAD_EDIT = 'DELETE_LEAD_EDIT',
 }
 
 export interface INothing {}

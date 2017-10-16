@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { IState, INothing, ILeadFields } from '../types'
+import { IState, INothing, ILeadEdit } from '../types'
 
 import {
   LeadEdit as Base,
@@ -10,20 +10,20 @@ import {
 } from '../components/LeadEdit'
 import { ActionCreator } from '../actions'
 
-export interface IPropsFromParent {
+interface IPropsFromParent {
   id: number
   url: string
   title: string
   author: string
 }
 
-export interface IPropsFromState { }
-
-export interface IPropsFromDispatch {
+interface IPropsFromDispatch {
   onSubmit: (id: number) => void
   onChange: (id: number, change: LeadEditChange) => void
   onCancel: (id: number) => void
 }
+
+interface IPropsFromState extends ILeadEdit { }
 
 const mapStateToProps = (state: IState, props: IPropsFromParent): IPropsFromState => {
   const edit = state.leadEdits[props.id]
@@ -46,16 +46,15 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>, props: IPropsFromParent)
 }
 
 const mergeProps = (propsFromState: IPropsFromState, propsFromDispatch: IPropsFromDispatch, propsFromParent: IPropsFromParent): IBaseProps => {
-  const lead: ILeadFields = {
-    ...propsFromParent,
-    ...propsFromState
-  }
 
   return {
     onSubmit: propsFromDispatch.onSubmit,
     onCancel: propsFromDispatch.onCancel,
     onChange: propsFromDispatch.onChange,
-    ...lead,
+    id: propsFromState.id || propsFromParent.id,
+    author: propsFromState.author || propsFromParent.author,
+    title: propsFromState.title || propsFromParent.title,
+    url: propsFromState.url || propsFromParent.url,
   }
 }
 

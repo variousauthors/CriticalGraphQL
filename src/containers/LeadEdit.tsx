@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { IState, INothing } from '../types'
+import { IState, INothing, ILeadFields } from '../types'
 
 import {
   LeadEdit as Base,
@@ -26,7 +26,8 @@ export interface IPropsFromDispatch {
 }
 
 const mapStateToProps = (state: IState, props: IPropsFromParent): IPropsFromState => {
-  return state.leadEdits[props.id]
+  const edit = state.leadEdits[props.id]
+  return edit
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<IState>, props: IPropsFromParent): IPropsFromDispatch => {
@@ -45,12 +46,16 @@ const mapDispatchToProps = (dispatch: Dispatch<IState>, props: IPropsFromParent)
 }
 
 const mergeProps = (propsFromState: IPropsFromState, propsFromDispatch: IPropsFromDispatch, propsFromParent: IPropsFromParent): IBaseProps => {
+  const lead: ILeadFields = {
+    ...propsFromParent,
+    ...propsFromState
+  }
+
   return {
     onSubmit: propsFromDispatch.onSubmit,
     onCancel: propsFromDispatch.onCancel,
     onChange: propsFromDispatch.onChange,
-    ...propsFromParent,
-    ...propsFromState
+    ...lead,
   }
 }
 

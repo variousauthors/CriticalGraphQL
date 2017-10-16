@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { LeadVote } from './LeadVote'
-import LeadEdit from '../containers/LeadEdit'
+import { LeadEdit as BaseLeadEdit } from './LeadEdit'
+import { outer as connectLeadEdit } from '../containers/LeadEdit'
+import { inner as graphqlLeadEdit } from '../containers/LeadEditMutation'
+
+const LeadEdit = connectLeadEdit(graphqlLeadEdit(BaseLeadEdit))
 
 export interface ILeadShowProps {
   id: number
@@ -32,6 +36,7 @@ const style = {
 }
 
 export const LeadShow = (props: ILeadShowProps) => {
+  console.log(props)
   if (props.isEditing) {
     return <LeadEdit {...props}/>
   }
